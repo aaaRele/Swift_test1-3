@@ -1,0 +1,68 @@
+//（1）	给定一个Dictionary，包含key值name和age，用map函数返回age字符串数组;
+let dic = [["name": "wangyifan", "age": 20], ["name": "xuzheng", "age": 21], ["name": "wangqin", "age": 20]]
+let str = dic.map( { $0["name"]! } )  //返回字典数组中每个字典元素的"name"对应的值
+print(str)  //输出
+//（2）	给定一个String数组，用filter函数选出能被转成Int的字符串
+let arr1 = ["woshixuesheng", "177abc234", "17723487185", "789"]
+let arr2 = arr1.filter( { Int($0) != nil } )  //先将字符串元素强转为Int?，如果值为nil，则表示该字符串不能转换成Int
+print(arr2)  //输出
+//（3）	用reduce函数把String数组中元素连接成一个字符串，以逗号分隔
+let arr3 = ["woshixuesheng", "177abc234", "17723487185"]
+var str1 = arr3.reduce("", { $0 + "," + $1 }) //将字符串数组整合
+str1.remove(at: str1.startIndex)  //将这个","移除
+print(str1)  //输出
+//（4）	用 reduce 方法一次求出整数数组的最大值、最小值、总数和
+var intArr : [Int] = [1,2,3,4,5,6,7,8,9]
+let tuple = intArr.reduce((max: intArr[0], min: intArr[0], sum: 0), { (max: max($0.max, $1), min: min($0.min, $1), $0.sum + $1) })
+print(tuple)  //输出
+//（5）	新建一个函数数组
+func f1(a: Int) -> Int {
+    return a
+}  //函数类型为(Int) -> Int
+func f2(a: String) -> Int {
+    return Int(a)!
+}  //函数类型为(String) -> Int
+func f3() -> Int {
+    return 2
+}  //函数类型为() -> Int
+func f4(a: Int) {
+}  //函数类型为(Int) -> Void
+func f5(a: Int) -> Int {
+    return a + 1
+}  //函数类型为(Int) -> Int
+let funArr: [Any] = [f1, f2, f3, f4, f5]
+for (index, value) in funArr.enumerated() { //因为循环过程中需要设计到数组的下标，要将数组元素一一列举出来，所以需要调用数组的enumerated()方法。
+    if value is (Int) -> Int {
+        print(index)  //输出类型为(Int) -> Int的函数在数组中的下标，
+    }
+}  //输出结果为0 (换行)  4
+
+//（6）	扩展Int，增加sqrt方法，可以计算Int的Sqrt值并返回浮点数，进行验证；
+extension Int {
+    //求平方根
+    ///- Returns: 返回该Int型数据的平方根
+    func sqrt() -> Double {
+        return Darwin.sqrt(Double(self))
+    }
+}
+print(4.sqrt())  //输出2.0
+//（7）	实现一个支持泛型的函数，该函数接受任意个变量并返回最大和最小值，分别传入整数值、浮点数值、字符串进行验证。
+func getMaxAndMin<T: Comparable>(a: T...) -> (T, T) {
+    var max = a[0]
+    var min = a[0]
+
+    for item in a {
+        if item > max {
+            max = item
+        } else if item < min {
+            min = item
+        }
+    }
+
+    return (max, min)
+}
+
+print(getMaxAndMin(a: 1, 2, 3, 9, 2, 88))  //输出(88, 1)
+print(getMaxAndMin(a: 1.0, 2.0, 3.0, 9.0, 2.0, 88.0))  //输出(88.0, 1.0)
+print(getMaxAndMin(a: "a", "b", "A", "sss"))  //输出("sss", "A")12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394
+
