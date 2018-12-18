@@ -1,0 +1,53 @@
+//找出1-10000的质数
+//对数组进行正反排序并输出结果
+func searchPrimNum () -> [Int] {
+    var changeArray = [2,3] //定义可变数组,将已知的已知的质数2、3提前放入数组中
+    var recordIsPrim = 0    //用于记录判断质数
+    for x in 4 ... 10000 {
+    //因为2、3已经zai在数组中，所以从4开始判断
+        for y in 2..<x {
+        //质数：除了1和本身，除不尽任何数（...包含上界，..<不包含上街上界）
+            if x % y == 0 {
+                recordIsPrim += 1
+                break
+            }
+        }
+        if recordIsPrim == 0{
+            changeArray.append
+            //在数组末尾追加空间
+        }
+        recordIsPrim = 0
+    }
+    return changeArray
+}
+var primNum = searchPrimNum()
+primNum.sort()  //升序排序
+print("数组升序排列为：")
+print(primNum)
+
+//第一种
+primNum.sort(by :{
+    (m:Int,n:Int) -> Bool in
+        return m>n
+})
+print("第一种数组降序排列为：")
+print(primNum)
+
+//第二种
+func compare(m:Int,n:Int)->Bool{
+    return m>n
+}
+primNum.sort(by: compare)
+print("第二种数组降序排列为：")
+print(primNum)
+
+
+//第三种
+primNum.sort{
+    (m,n) -> Bool in
+        return m>n
+}
+print("第三种数组降序排列为：")
+print(primNum)
+
+
